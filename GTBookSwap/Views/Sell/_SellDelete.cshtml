@@ -1,0 +1,64 @@
+﻿@model GTBookSwap.Models.EG_Textbook
+
+<form id="SellDeleteContent">
+    <div class=container>
+        <dl class="dl-horizontal">
+            @Html.HiddenFor(model => model.ID)
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+                @Html.HiddenFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+                @Html.HiddenFor(model => model.Title)
+            </dd>
+
+            <dt>
+                Course Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Major)
+                @Html.HiddenFor(model => model.Major)
+            </dd>
+
+            <dt>
+                Course Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Course_num)
+                @Html.HiddenFor(model => model.Course_num)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Condition)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Condition)
+                @Html.HiddenFor(model => model.Condition)
+            </dd>
+
+            <dt>
+                Description
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Desc)
+                @Html.HiddenFor(model => model.Desc)
+            </dd>
+
+        </dl>
+    </div>
+</form>
+

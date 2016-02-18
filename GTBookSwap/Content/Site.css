@@ -1,0 +1,321 @@
+﻿body {
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 100%;
+}
+/*text are maximum size*/
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+/*Modified CSS components start here*/
+
+.mainheader {
+  padding: 30px;
+  margin-bottom: 0px;
+  /*border-bottom:1px solid #e6ae27 ;*/
+  font-size: 21px;
+  min-height:368px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-image:url(../Images/TechTower.png);
+}
+
+.mainheader h1 {
+  line-height: 1;
+  color: #ffffff;
+}
+
+.mainheader p {
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.container .mainheader {
+  border-radius: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .mainheader {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+/*Margin between contain and contends inside of it*/
+  .container .mainheader {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .mainheader h1 {
+    font-size: 63px;
+  }
+}
+
+.bluecontainer {
+  padding: 30px;
+  margin-bottom: 0px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-color:#00223e;
+}
+
+.bluecontainer h1 {
+  line-height: 1;
+  color: #ffffff;
+}
+
+.bluecontainer p {
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.container .bluecontainer {
+  border-radius: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .bluecontainer {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  /*Margin between contain and contends inside of it*/
+  .container .bluecontainer {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .bluecontainer h1 {
+    font-size: 63px;
+  }
+}
+
+.yellowcontainer {
+  padding: 30px;
+  margin-bottom: 0px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-color:#e6ae27;
+}
+
+.yellowcontainer h1 {
+  line-height: 1;
+  color: #ffffff;
+}
+
+.yellowcontainer p {
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.container .yellowcontainer {
+  border-radius: 0px;
+}
+
+@media screen and (min-width: 768px) {
+  .yellowcontainer {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  /*Margin between contain and contends inside of it*/
+  .container .yellowcontainer {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .yellowcontainer h1 {
+    font-size: 63px;
+  }
+}
+
+.blankcontainer {
+  padding: 30px; 
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-color: #eeeeee;
+}
+
+.blankcontainer h1 {
+  line-height: 1;
+  color: inherit;
+}
+
+.blankcontainer h2 {
+
+}
+
+.blankcontainer p {
+  line-height: 1.4;
+}
+
+.container .blankcontainer {
+  border-radius: 6px;
+}
+
+@media screen and (min-width: 768px) {
+  .blankcontainer {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .container .blankcontainer {
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+  .blankcontainer h1 {
+    font-size: 63px;
+  }
+}
+
+.drop-control:-moz-placeholder {
+  color: #999999;
+}
+
+.drop-control::-moz-placeholder {
+  color: #999999;
+}
+
+.drop-control:-ms-input-placeholder {
+  color: #999999;
+}
+
+.drop-control::-webkit-input-placeholder {
+  color: #999999;
+}
+
+.drop-control {
+  display: block;
+  height: 55px;
+  font-size: 25px;
+  padding: 6px 12px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+}
+
+.drop-control select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.drop-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.drop-control[disabled],
+.drop-control[readonly],
+fieldset[disabled] .drop-control {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+textarea.drop-control {
+  height: auto;
+}
+
+
+.drop-control_sm:-moz-placeholder {
+  color: #999999;
+}
+
+.drop-control_sm::-moz-placeholder {
+  color: #999999;
+}
+
+.drop-control_sm:-ms-input-placeholder {
+  color: #999999;
+}
+
+.drop-control_sm::-webkit-input-placeholder {
+  color: #999999;
+}
+
+.drop-control_sm {
+  display: block;
+  height: 55px;
+  font-size: 25px;
+  padding: 6px 12px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+          transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
+}
+
+.drop-control_sm select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+}
+
+.drop-control_sm:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.drop-control_sm[disabled],
+.drop-control_sm[readonly],
+fieldset[disabled] .drop-control_sm {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+textarea.drop-control_sm {
+  height: auto;
+}
+

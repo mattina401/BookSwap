@@ -1,0 +1,122 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+<div class="mainheader">
+    <div class="container">
+        <h1>GT BookSwap Page</h1>
+        <p>Sign up for BongBong to sell your textbooks!</p>
+        @*<p>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "btn btn-primary", data_toggle = "modal", data_target = "basicModal" })</p>*@
+    </div>
+</div>
+
+<div class="bluecontainer">
+    <div align="center">
+        <div class="container">
+            <h1>Search by Keyword</h1>
+            <form class="navbar-form" role="search">
+                <input type="hidden" name="searchOption" id="searchOption" value="" />
+                <div class="btn-group">
+                    <a class="btn btn-default dropdown-toggle btn-select" href="#" data-toggle="dropdown">
+                        Search Option
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Buy</a></li>
+                        <li><a href="#">Sell</a></li>
+                    </ul>
+                </div>
+                
+               @* <div class="form-group">
+
+    @Html.DropDownList("searchOption", new SelectList(new List<Object>{
+        new {value = "Buy", text = "Buy"},
+        new {value = "Sell", text = "Sell"}
+        }, "value", "text"), new { @class = "dropdown" })
+                </div>*@
+                <div class="form-group">
+                    @Html.TextBox("searchString", "", new { @class = "form-control", size = 50, placeholder = "Search by title, author or ISBN" })
+                </div>
+                <button type="submit" class="btn btn-primary btn-large" style="width:100px; height:55px;">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="yellowcontainer">
+    <div align="center">
+
+        <div class="container">
+
+            <h1>Search by Course</h1>
+
+            <form class="navbar-form" role="search">
+                <div class="form-group">
+                    @Html.DropDownList("searchOption", new SelectList(new List<Object>{
+                        new {value = "Buy", text = "Buy"},
+                        new {value = "Sell", text = "Sell"}
+                        }, "value", "text"), new { @class = "drop-control" })
+                </div>
+
+                <div class="form-group">
+                    @Html.DropDownList("GT_Course", ViewBag.courseid as SelectList, "Select a Course", new { @class = "drop-control", id = "course" })
+                </div>
+                <div class="form-group">
+                    <select class="drop-control" id="class" name="courseNum">
+                        <option>Select a Class</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-warning" style="width:100px; height:55px;">Search</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@{
+    Html.RenderAction("Register", "Account");
+    Html.RenderAction("Login", "Account");
+}
+
+<script type="text/jscript">
+    var IndexURL = {
+        ListUrl: '@Url.Action("classList", "Home")'
+    };
+    $(function () {
+        // $('#class').hide();
+
+        $('#course').change(function () {
+            $.ajax({
+                url: IndexURL.ListUrl + "/" + $('#course').val(),
+                dataType: "json",
+                success: function (data) {
+                    var items = "";
+                    $.each(data, function (index, Class) {
+                        items += "<option value = '" + Class.Value + "'>" + Class.Text + "</option>";
+                    });
+                    $('#class').html(items);
+                    $('#class').show();
+                },
+                error: function (data) {
+                    var items = "";
+                    items += "<option>Select a Class</option>";
+                     $('#class').html(items);
+                    $('#class').show();
+                }
+            })
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('.dropdown-menu li').click(function (e) {
+        e.preventDefault();
+        var selected = $(this).text();
+        $(this).parents('.btn-group').find('.dropdown-toggle').html(selected + ' <span class="caret"></span>');
+        $('#searchOption').val(selected);
+
+    });
+</script>

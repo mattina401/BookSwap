@@ -1,0 +1,85 @@
+@model GTBookSwap.Models.EG_Textbook
+
+<div class="modal fade" id="searchSellPostModal" tabindex="-1" role="dialog" aria-labelledby="searchSellPostLabel" aria-hidden="true">
+    <div class="modal-dialog" id="pop">
+        <div class="modal-content" id="popSearchSellPost">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchSellPostLabel">Post Your Book</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+                <div class="container no-padding no-margin">
+                    @{Html.RenderAction("_SellPost");}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="sellPostModal" tabindex="-1" role="dialog" aria-labelledby="sellPostLabel" aria-hidden="true">
+    <div class="modal-dialog" id="pop">
+        <div class="modal-content" id="popSellPost">
+            <div class="modal-header">
+                <h4 class="modal-title" id="sellPostLabel">Post Your Book</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+                <div class="container no-padding no-margin" id="sellPostBottom">
+                     @{Html.RenderPartial("_SellPostBottom");}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 container no-padding">
+                        <input type="submit" value="Post" id="SellPost" class="btn btn-default btn-lg">
+                        <input type="submit" value="Back" id ="BackSearch" class="btn btn-default btn-lg">
+                        <!--Add back to list button-->
+                        @Html.ActionLink("Cancel", "Index", "Books", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-lg" })
+                    </div>
+                    <span id="registerData"></span>
+                    <span id="test1"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var PostURL = {
+        PostUrl: '@Url.Action("SellPost", "Sell")'
+    };
+
+    $("#SellPost").click(function () {
+        var content = $("#SellPostContent").serialize();
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var str = "__RequestVerificationToken=" + token + "&" + content;
+        $.ajax({
+            url: PostURL.PostUrl,
+            cache: 'false',
+            type: 'POST',
+            data: str,
+            dataType: "json",
+            success: function (result) {
+                alert("Post Succeed!!");
+                window.location = result;
+                //$("#searchContainer").html(result);
+            },
+            error: function (result) {
+               alert("Fail");
+            }
+        })
+    });
+    $("#BackSearch").click(function () {
+        $("#searchSellPostModal").modal('show');
+        $("#sellPostModal").modal('hide');
+    })
+</script>
+

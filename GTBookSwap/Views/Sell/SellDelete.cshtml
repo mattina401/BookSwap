@@ -1,0 +1,58 @@
+﻿@model GTBookSwap.Models.EG_Textbook
+
+<div class="modal fade" id="sellDeleteModal" tabindex="-1" role="dialog" aria-labelledby="sellDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" id="pop">
+        <div class="modal-content" id="popSellDelete">
+            <div class="modal-header">
+                <h4 class="modal-title" id="sellDeleteLabel">Edit Your Book</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+                <div class="container no-padding no-margin" id="sellDelete">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 container no-padding">
+                        <input type="submit" value="Delete" id="SellDelete" class="btn btn-default btn-lg">
+                        <!--Add back to list button-->
+                        @Html.ActionLink("Cancel", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-lg" })
+                    </div>
+                    <span id="registerData"></span>
+                    <span id="test1"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var SellDeleteURL = {
+        SellDeleteUrl: '@Url.Action("SellDelete", "Sell")'
+    };
+
+    $("#SellDelete").click(function () {
+        var content = $("#SellDeleteContent").serialize();
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var str = "__RequestVerificationToken=" + token + "&" + content;
+        $.ajax({
+            url: SellDeleteURL.SellDeleteUrl,
+            cache: 'false',
+            type: 'POST',
+            data: str,
+            dataType: "json",
+            success: function (result) {
+                alert("Delete Succeed!!");
+                window.location = result;
+                //$("#searchContainer").html(result);
+            },
+            error: function (result) {
+                alert("Fail");
+            }
+        })
+    });
+</script>

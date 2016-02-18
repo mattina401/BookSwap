@@ -1,0 +1,49 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="container">
+    <h2>Details</h2>
+    <h4>Textbook</h4>
+	<hr />
+    <div class="container">
+
+        <table class="table table-hover">
+            
+                <tr>
+                    @foreach (DataColumn col in Model.Columns)
+                    {
+                        <th>@col.ColumnName</th>
+                    }
+                </tr>
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+{
+
+    <tr style="text-align:center">
+        @foreach (DataColumn col in Model.Columns)
+        {
+            if (col.ColumnName == "Image")
+            {
+                <td><img src="@row[0]" style="width:120px; height:170px"></td>
+            }
+            else
+            {
+                <td style="vertical-align:middle">@row[col.ColumnName]</td>
+            }
+        }
+    </tr>
+}
+            </tbody>
+        </table>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "SellIndex")
+    </p>
+</div>
+

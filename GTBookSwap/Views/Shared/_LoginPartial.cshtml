@@ -1,0 +1,31 @@
+﻿@using System;
+@using Microsoft.AspNet.Identity
+@using GTBookSwap.Models;
+@if (Request.IsAuthenticated)
+{
+    //get current user id 
+    var currentUserId = User.Identity.GetUserId();
+    //initiate manager to retreive Usermanage variable
+    var manager = new UserManager<ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+    //find current user using manager created
+    var currentUser = manager.FindById(currentUserId);
+    
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Hello " + currentUser.NickName + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target="#myRegisterModal">Register</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#myLoginModal">Log in</a></li>
+    </ul>
+}

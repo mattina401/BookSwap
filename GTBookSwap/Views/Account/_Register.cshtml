@@ -1,0 +1,91 @@
+﻿@model GTBookSwap.Models.RegisterViewModel
+
+
+<div class="modal-content" id="popRegister">
+    <div class="modal-header">
+        <h4 class="modal-title" id="registerLabel">Register</h4>
+    </div>
+    <div class="modal-body">
+        <form id="registerContent">
+            <div class="container" id="regi">
+                @Html.AntiForgeryToken()
+                <h4>Create a new account.</h4>
+                <hr />
+                @Html.ValidationSummary()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "drop-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NickName, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.NickName, new { @class = "drop-control" })
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Phone, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "drop-control" })
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(m => m.Password, new { @class = "drop-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "drop-control" })
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="Register" class="btn btn-default" value="Register" />
+            </div>
+            <p>
+                <a id="inLogin" href="#" data-toggle="modal" data-target="#myLoginModal">Login</a> if you have a local account.
+            </p>
+            <span id="registerData"></span>
+            <span id="test1"></span>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var RegisterURL = {
+        RegisterUrl: '@Url.Action("Register", "Account")'
+    };
+
+    $("#Register").click(function () {
+        var str = $("#registerContent").serialize();
+        $.ajax({
+            url: RegisterURL.RegisterUrl,
+            type: 'POST',
+            cache: 'false',
+            data: str,
+            dataType: "json",
+            success: function (result) {
+                window.location = '/Home/Primary';
+            },
+            error: function (result) {
+                $("#popRegister").html(result.responseText);
+            }
+        })
+    })
+
+    $("#inLogin").click(function () {
+        $("#myRegisterModal").modal('hide');
+        $("#myLoginModal").modal('show');
+    })
+</script>

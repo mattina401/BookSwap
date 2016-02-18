@@ -1,0 +1,96 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+
+<div class="container" id="searchContainer">
+    <div align="center">
+        <form class="navbar-form" role="search" id="SearchForm">
+            <div class="form-group">
+                @Html.TextBox("ISBNsearch", "", new { @class = "drop-control", size = 30, placeholder = "Please Enter the ISBN here" })
+            </div>
+        
+        </form>
+        <input type="submit" value="Search" class="btn btn-primary btn-large" id="Search" style="width:100px; height:55px;">
+    </div>
+    <hr />
+    <div class="container" style="overflow: auto">
+        <table class="table table-hover">
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    <th>@col.ColumnName</th>
+                }
+            </tr>
+
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+                    <tr style="text-align:center">
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            if (col.ColumnName == "Image")
+                            {
+                                <td><img src="@row[0]" style="overflow:auto"></td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align:middle">@row[col.ColumnName]</td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div align="center">
+        <input type="submit" value="OK" class="btn btn-warning" id="putIn">
+        @*@Html.ActionLink("OK", "SellPost", new { ISBN = ViewBag.ISBN, title = ViewBag.title, author = ViewBag.author, year = ViewBag.year }, new { @class = "btn btn-warning" })*@
+    </div>
+</div>
+
+<script type="text/javascript">
+    var PostSearchURL = {
+        PostSearchUrl: '@Url.Action("_SellPost", "Sell")'
+    };
+
+    $("#Search").click(function () {
+        var str = $("#SearchForm").serialize();
+        $.ajax({
+            url: PostSearchURL.PostSearchUrl,
+            cache: 'false',
+            data: str,
+            dataType: "html",
+            success: function (result) {
+                $("#searchContainer").html(result);
+            },
+            error: function (result) {
+                alert("Fail");
+            }
+        })
+    });
+
+    var SellPostURL = {
+        SellPostUrl: '@Url.Action("_SellPostBottom", "Sell")'
+    };
+
+    $("#putIn").click(function () {
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var str = "__RequestVerificationToken=" + token + "&ISBN=" + '@ViewBag.ISBN' + "&title=" + '@ViewBag.title' + "&author=" + '@ViewBag.author' + "&Edition=" + '@ViewBag.year';
+        $.ajax({
+            url: SellPostURL.SellPostUrl,
+            type: 'POST',
+            cache: 'false',
+            data: str,
+            dataType: "html",
+            success: function (result) {
+                $("#sellPostBottom").html(result);
+                $("#searchSellPostModal").modal('hide');
+                $("#sellPostModal").modal('show');
+            },
+            error: function (result) {
+                alert("Fail");
+                alert(result.responseText);
+            }
+        })
+    })
+</script>

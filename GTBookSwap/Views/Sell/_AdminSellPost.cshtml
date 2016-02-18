@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<GTBookSwap.Models.EG_Textbook>
+
+<div class="box box-info" style="overflow:auto">
+    <div class="box-body">
+        <table id="part" class="table table-hover">
+            @if (Model.Count() == 0)
+            {
+                <tr style="text-align:center">
+                    <td colspan="6">No item to display</td>
+                </tr>
+            }
+            else
+            {
+
+                int num = 0;
+                foreach (var item in Model)
+                {
+                    if (item.Title != null)
+                    {
+                        <tr class="header" style="text-align:center">
+
+                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Major)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Course_num)</td>
+                            <!--Handle lowercase using ToLower()-->
+                            @if (item.Condition.ToLower() == "new")
+                            {
+                                <td><span class="label label-success">New</span></td>
+                            }
+                            else if (item.Condition == "Used")
+                            {
+                                <td><span class="label label-warning">Used</span></td>
+                            }
+                            else if (item.Condition == "Like New")
+                            {
+                                <td><span class="label label-primary">Like New</span></td>
+                            }
+                            else if (item.Condition == "Acceptable")
+                            {
+                                <td><span class="label label-danger">Acceptable</span></td>
+                            }
+
+                            <td style="vertical-align:middle">
+                                @Html.ActionLink(" ", "SellEdit", new { id = item.ID }, htmlAttributes: new { @class = "glyphicon glyphicon-edit" }) |
+                                @Html.ActionLink(" ", "SellDelete", new { id = item.ID }, htmlAttributes: new { @class = "glyphicon glyphicon-trash" })
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="7">
+                                @{Html.RenderAction("PAction", new { id = item.ID });}
+                            </td>
+                        </tr>
+                        // just showing first 10 items, because there are a lot of post. It is extremely slow
+                        num++;
+                        if (num == 10)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        </table>
+    </div>
+</div>

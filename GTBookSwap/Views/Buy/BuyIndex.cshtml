@@ -1,0 +1,132 @@
+﻿@model IEnumerable<GTBookSwap.Models.Buy_User>
+
+@{
+    ViewBag.Title = "BuyIndex";
+}
+<div class="container pull-right">
+    @*If user want to post, he/she has to log in first*@
+    @if (User.Identity.Name == "")
+    {
+        <p><a href="#" data-toggle="modal" data-target="#myLoginModal" class="btn btn-danger btn-large">Post >></a></p>
+    }
+    else
+    {
+        <p><a href="#" data-toggle="modal" data-target="#searchSellPostModal" class="btn btn-danger btn-large">Post >></a></p>
+    }
+</div>
+
+
+
+
+    <div class="container">
+        <table id="report" class="table table-hover">
+            <tr style="text-align:center">
+
+                <!-- distinguish between user and non-user-->
+                @if (User.Identity.Name == "")
+                {
+
+                }
+                else
+                {
+                    <th>Bookmark</th>
+                }
+
+                <th>
+
+                    @Html.ActionLink("Title", "BuyIndex", new {
+                         sortOrder = "title",
+                         currentSortOrder = ViewBag.currentSortOrder,
+                         searchString = ViewBag.currentSearchString,
+                         courseNum = ViewBag.currentCourseNum
+                     })
+
+
+                </th>
+                <th>
+
+                    @Html.ActionLink("Course Name", "BuyIndex", new
+ {
+     sortOrder = "courseName",
+     currentSortOrder = ViewBag.currentSortOrder,
+     searchString = ViewBag.currentSearchString,
+     courseNum = ViewBag.currentCourseNum
+ })
+
+
+                </th>
+                <th>
+
+                    @Html.ActionLink("Course Number", "BuyIndex", new
+ {
+     sortOrder = "courseNumber",
+     currentSortOrder = ViewBag.currentSortOrder,
+     searchString = ViewBag.currentSearchString,
+     courseNum = ViewBag.currentCourseNum
+ })
+
+
+                </th>
+                <th>Description</th>
+
+            </tr>
+            @if (Model.Count() == 0)
+            {
+                <tr style="text-align:center">
+                    <td colspan="5">No item to display</td>
+                </tr>
+            }
+            else
+            {
+                int num = 0;
+                foreach (var item in Model)
+                {
+
+                    <tr class="header1" style="text-align:center">
+                        @if (User.Identity.Name == "")
+                        {
+
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.ActionLink("Add", "SellIndex", new { id = item.ID, status = 3 }, new { onClick = "return confirm('Damn! BBONG');" })
+                                @Html.ActionLink("Remove", "SellIndex", new { id = item.ID, status = 4 }, new { onClick = "return confirm('BBONG BBONG');" })
+                            </td>
+                        }
+
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Major)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Course_num)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Desc)</td>
+
+                        <!--  <td>
+                          @Html.ActionLink("Edit", "SellEdit", new { id = item.ID }) |
+                          @Html.ActionLink("Details", "SellDetails", new { id = item.ID }) |
+                          @Html.ActionLink("Delete", "SellDelete", new { id = item.ID })
+
+                      </td> -->
+                    </tr>
+
+                    <tr>
+                        <td colspan="9">
+                            @{Html.RenderAction("PAction", new { id = item.ID });}
+                        </td>
+                    </tr>
+                            num++;
+                            if (num == 10)
+                            {
+                                break;
+                            }
+                }
+            }
+        </table>
+
+    </div>
+
+<script>
+    $('.header1').nextUntil('tr.header1').hide();
+    $('.header1').click(function () {
+        $(this).nextUntil('tr.header1').slideToggle(100);
+    });
+</script>

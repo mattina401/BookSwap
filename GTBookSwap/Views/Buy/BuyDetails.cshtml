@@ -1,0 +1,56 @@
+﻿@model GTBookSwap.Models.Buy_User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="container">
+    <h2>Details</h2>
+    <h4>Textbook</h4>
+	<hr />
+    <dl class="dl-horizontal">
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            Course Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Major)
+        </dd>
+
+        <dt>
+            Course Number
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course_num)
+        </dd>
+
+      
+
+     
+        <dt>
+            Description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desc)
+        </dd>
+
+    </dl>
+    <p>
+        @Html.ActionLink("Edit", "BuyEdit", new { id = Model.ID }) |
+        @Html.ActionLink("Back to List", "BuyIndex")
+    </p>
+</div>
+

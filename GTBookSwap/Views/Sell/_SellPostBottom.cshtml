@@ -1,0 +1,200 @@
+﻿@model GTBookSwap.Models.EG_Textbook
+
+<form id="SellPostContent">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-1" })
+                <div class="col-md-11">
+                    @Html.TextBoxFor(model => model.Title, new { @class = "drop-control" })
+                    @Html.ValidationMessageFor(model => model.Title)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Author, new { @class = "control-label col-md-1" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.Author, new { @class = "drop-control" })
+                    @Html.ValidationMessageFor(model => model.Author)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Edition, new { @class = "control-label col-md-1" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.Edition, new { @class = "drop-control" })
+                    @Html.ValidationMessageFor(model => model.Edition)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-1" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.Price, new { @class = "drop-control" })
+                    @Html.ValidationMessageFor(model => model.Price)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ISBN, new { @class = "control-label col-md-1" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.ISBN, new { @class = "drop-control" })
+                    @Html.ValidationMessageFor(model => model.ISBN)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="container">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Desc, new { @class = "control-label col-md-1" })
+                    <div class="col-md-11">
+                        @Html.TextAreaFor(model => model.Desc, new { @class = "drop-control" })
+                        @Html.ValidationMessageFor(model => model.Desc)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="col-md-12">
+
+                <div class="form-group">
+                    @Html.Label("Course", new { @class = "control-label col-md-1" })
+                    <div class="col-md-6">
+                        <input type="hidden" name="GT_Course" id="selectedCourse" value="" />
+                        <div class="btn-group">
+                            <a class="btn btn-default dropdown-toggle btn-select" href="#" data-toggle="dropdown" id="courseSearchDrop">
+                                Search a Course
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" id="courseSearchDropdown">
+                                @foreach (var eachCourse in ViewBag.courseid)
+                                {
+                                    var v = eachCourse.Value;
+                                    var t = eachCourse.Text;
+                                    <li onclick="CourseChange('@v', '@t')"><a href="#">@eachCourse.Text</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Class", new { @class = "control-label col-md-1" })
+                    <div class="col-md-4">
+                        <input type="hidden" name="courseNum" id="selectedCourseNum" value="" />
+                        <div class="btn-group">
+                            <a class="btn btn-default dropdown-toggle btn-select" href="#" data-toggle="dropdown" id="courseNumberSearchDrop">
+                                Select a Class
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" id="courseNumberSearchDropdown"></ul>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="form-group">
+                @Html.Label("Status", new { @class = "control-label col-md-1" })
+                <div class="col-md-6">
+                    <input type="hidden" name="condition" id="sellPostCondition" value="" />
+                    <div class="btn-group">
+                        <a class="btn btn-default dropdown-toggle btn-select" href="#" data-toggle="dropdown" id="sellPostConditionDrop">
+                            Select Option
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="sellPostConditionDropdown">
+                            <li onclick="ConditionChange('New')"><a href="#">New</a></li>
+                            <li onclick="ConditionChange('Like New')"><a href="#">Like New</a></li>
+                            <li onclick="ConditionChange('Used')"><a href="#">Used</a></li>
+                            <li onclick="ConditionChange('Acceptable')"><a href="#">Acceptable</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Contact", new { @class = "control-label col-md-1" })
+                <div class="col-md-4">
+                    <input type="hidden" name="userinfo" id="sellPostUserInfo" value="" />
+                    <div class="btn-group">
+                        <a class="btn btn-default dropdown-toggle btn-select" href="#" data-toggle="dropdown" id="sellPostUserInfoDrop">
+                            Select Option
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="sellPostUserInfoDropdown">
+                            <li onclick="UserInfoChange('Only e-mail')"><a href="#">Only e-mail</a></li>
+                            <li onclick="UserInfoChange('E-mail + Phone')"><a href="#">E-mail + Phone</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+</form>
+
+
+
+<script type="text/jscript">
+    var IndexURL = {
+        ListUrl: '@Url.Action("classList", "Sell")'
+    };
+
+    function CourseChange(selectedValue, selectedText){
+        $('#courseSearchDrop').html(selectedText + ' <span class="caret"></span>');
+        $('#selectedCourse').val(selectedValue);
+        $.ajax({
+            url: IndexURL.ListUrl + "/" + selectedValue,
+            dataType: "json",
+            success: function (data) {
+                var items = "";
+                $.each(data, function (index, Class) { 
+                    items += "<li onclick=" + '"' + "ClassChange('" + Class.Value + "', '" + Class.Text + "')" + '">'
+                        + "<a href=" + '"#"' + ">" + Class.Text + "</a></li>";
+                });
+                $('#courseNumberSearchDropdown').html(items);
+            },
+            error: function (data) {
+                var items = "";
+                $('#courseNumberSearchDropdown').html(items);
+            }
+        })
+    }
+
+    function ClassChange(selectedValue, selectedText) {
+        $('#courseNumberSearchDrop').html(selectedText + ' <span class="caret"></span>');
+        $('#selectedCourseNum').val(selectedValue);
+    }
+
+    function ConditionChange(str) {
+        $('#sellPostConditionDrop').html(str + ' <span class="caret"></span>');
+        $('#sellPostCondition').val(str);
+    }
+    
+    function UserInfoChange(str) {
+        $('#sellPostUserInfoDrop').html(str + ' <span class="caret"></span>');
+        $('#sellPostUserInfo').val(str);
+    }
+</script>
+
+

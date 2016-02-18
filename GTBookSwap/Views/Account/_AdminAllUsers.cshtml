@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<GTBookSwap.Models.AspNetUsers>
+
+<div class="box box-info" style="overflow:auto">
+    <div class="box-body">
+        <table id="part" class="table table-hover">
+            @if (Model.Count() == 0)
+            {
+                <tr style="text-align:center">
+                    <td colspan="3">No item to display</td>
+                </tr>
+            }
+            else
+            {
+
+
+                foreach (var item in Model)
+                {
+                    if (item.UserName != null)
+                    {
+                        <tr class="header" style="text-align:center">
+                            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NickName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+
+
+
+                            <td style="vertical-align:middle">
+                               @Html.ActionLink(" ", "UserDelete", new { id = item.Id }, htmlAttributes: new { @class = "glyphicon glyphicon-trash" })
+                            </td>
+
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    </div>
+</div>

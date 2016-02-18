@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNet.Identity
+@model GTBookSwap.Models.AspNetUsers
+
+@{
+    ViewBag.Title = "ChangeUserInfo";
+}
+
+<p>You're logged in as <strong>@User.Identity.Name</strong>.</p>
+
+@using (Html.BeginForm("ChangeUserInfo", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NickName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @*@Html.TextBoxFor(model => model.NickName, new { @class = "col-md-2 control-label" })*@
+            @Html.TextBox("nickname", (string)ViewBag.nickname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @*@Html.TextBoxFor(model => model.Phone, new { @class = "col-md-2 control-label" })*@
+            @Html.TextBox("phone", (string)ViewBag.phone, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-5">
+            <input type="submit" value="Change" class="btn btn-default btn-lg" />
+            <input type="reset" value="Reset" class="btn btn-default btn-lg" />
+            @Html.ActionLink("Cancel", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-lg" })
+        </div>
+    </div>
+}

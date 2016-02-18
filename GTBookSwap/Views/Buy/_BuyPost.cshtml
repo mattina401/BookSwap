@@ -1,0 +1,72 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+
+
+<!--Shared layout generates nav-bar on the top. Import styles and cripts needed instead-->
+@{
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+}
+
+
+<div class="container">
+    <div align="center">
+        <h1>Post your textbook!</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div align="center">
+        <form class="navbar-form" role="search">
+            <div class="form-group">
+                @Html.TextBox("ISBNsearch", "", new { @class = "form-control", size = 30, placeholder = "Please Enter the ISBN here" })
+
+            </div>
+            <input type="submit" value="Search" class="btn btn-primary btn-large" style="width:100px; height:55px;">
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <hr />
+    <div class="container">
+
+        <table class="table table-hover">
+            <tr>
+                @foreach (DataColumn col in Model.Columns)
+                {
+                    <th>@col.ColumnName</th>
+                }
+            </tr>
+
+            <tbody>
+                @foreach (DataRow row in Model.Rows)
+                {
+
+                    <tr style="text-align:center">
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            if (col.ColumnName == "Image")
+                            {
+                                <td><img src="@row[0]" style="width:120px; height:170px"></td>
+                            }
+                            else
+                            {
+                                <td style="vertical-align:middle">@row[col.ColumnName]</td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container">
+    <div align="center">
+        @Html.ActionLink("OK", "BuyPost", new { ISBN = ViewBag.ISBN, title = ViewBag.title, author = ViewBag.author, year = ViewBag.year }, new { @class = "btn btn-warning" })
+    </div>
+</div>
+

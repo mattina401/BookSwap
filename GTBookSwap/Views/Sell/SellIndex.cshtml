@@ -1,0 +1,261 @@
+﻿@model IEnumerable<GTBookSwap.Models.EG_Textbook>
+
+@{
+    ViewBag.Title = "SellIndex";
+}
+
+<div id="FullContent">
+    <div class="container pull-right">
+        @*If user want to post, he/she has to log in first*@
+        @if (User.Identity.Name == "")
+        {
+            <p><a href="#" data-toggle="modal" data-target="#myLoginModal" class="btn btn-danger btn-large">Post >></a></p>
+        }
+        else
+        {
+            <p><a href="#" data-toggle="modal" data-target="#searchSellPostModal" class="btn btn-danger btn-large">Post >></a></p>
+        }
+    </div>
+
+    <div class="container">
+        <table id="report" class="table table-hover">
+            <tr style="text-align:center">
+
+                <!-- distinguish between user and non-user-->
+                @if (User.Identity.Name == "")
+                {
+
+                }
+                else
+                {
+                    <th>Bookmark</th>
+                }
+
+
+                <th>
+                    <a href="#" onclick="sortRedirectToIndex('price', '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">Price</a>
+                </th>
+                <th>
+                    <a href="#" onclick="sortRedirectToIndex('title', '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">Title</a>
+
+                </th>
+                <th>
+                    <a href="#" onclick="sortRedirectToIndex('courseName', '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">Course Name</a>
+                </th>
+                <th>
+                    <a href="#" onclick="sortRedirectToIndex('courseNumber', '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">Course Number</a>
+                </th>
+                <th>
+                    <a href="#" onclick="sortRedirectToIndex('condition', '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">Condition</a>
+                </th>
+            </tr>
+            @if (Model.Count() == 0)
+            {
+                <tr style="text-align:center">
+                    <td colspan="6">No item to display</td>
+                </tr>
+            }
+            else
+            {
+                int num = 0;
+                foreach (var item in Model)
+                {
+                    if ((ViewBag.pageStart <= num) && ((ViewBag.pageStart + 10) > num))
+                    {
+                        <tr class="header" style="text-align:center">
+
+                            @if (User.Identity.Name == "")
+                            {
+
+                            }
+                            else
+                            {
+                                if (item.Flag == 1)
+                                {
+                                    <td>
+                                        <form>
+                                            <label class="myCheckbox">
+                                                <input id=@num type="checkbox" name=@item.ID value=4 checked onchange='handleClick(this.name, this.value)' />
+
+                                                <label class="green" for=@num></label>
+                                            </label>
+                                        </form>
+                                    </td>
+                                }
+                                else if (item.Flag == 0)
+                                {
+                                    <td>
+                                        <label class="myCheckbox">
+                                            <input id=@num type="checkbox" name=@item.ID value=3 onchange='handleClick(this.name, this.value)' />
+
+                                            <label class="green" for=@num></label>
+                                        </label>
+                                    </td>
+                                }
+                            }
+
+
+
+                            <td style="font-size:20px; color:red">@Html.DisplayFor(modelItem => item.Price)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Major)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Course_num)</td>
+                            @if (item.Condition.ToLower() == "new")
+                            {
+                                <td><span class="label label-success">New</span></td>
+                            }
+                            else if (item.Condition == "Used")
+                            {
+                                <td><span class="label label-warning">Used</span></td>
+                            }
+                            else if (item.Condition == "Like New")
+                            {
+                                <td><span class="label label-primary">Like New</span></td>
+                            }
+                            else if (item.Condition == "Acceptable")
+                            {
+                                <td><span class="label label-danger">Acceptable</span></td>
+                            }
+
+
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="9">
+                                @{Html.RenderAction("PAction", new { id = item.ID });}
+                            </td>
+
+
+                        </tr>
+
+                    }
+                    num++;
+                }
+            }
+
+
+        </table>
+        <div class="container">
+            <div class="col-md-5">
+
+            </div>
+            <div class="col-md-7">
+                @if (true)
+                {
+                    int pages = ViewBag.pageStart / 10 + 1;
+                    int pageIndex = ViewBag.pageStart / 10 + 1;//1,2,3,4,5,6
+                    pageIndex /= 5;   //here 1
+                    if (pages % 5 == 0)
+                    { //edge case
+                        pageIndex--;
+                    }
+                    pageIndex *= 5;  //becomes 5
+                    int pageIndexStart = pageIndex + 1;   //pageIndexStart= 6
+                    int pageIndexEnd = pageIndexStart + 4;  //pageIndexEnd=10;
+                    int maxPageIndex = ViewBag.maxPage / 10 + 1;
+
+                    //print the pages
+                    int currentPage = ViewBag.pageStart / 10 + 1;
+                    if (currentPage > 5)
+                    {
+                        <b>
+                            <a href="#" onclick="pageNumbering(@pageIndex*10-10, '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')"><-</a>
+
+                            
+                            
+                           
+                
+                
+                
+                
+                </b>
+                    }
+                    for (int i = pageIndexStart; i <= (pageIndexEnd); i++)
+                    {
+                        int selectPage = i * 10 - 10;
+                        String currentPageStringFormat = " " + currentPage;
+                        if (i == currentPage)
+                        {
+                            @currentPageStringFormat
+                        }
+                        else
+                        {
+                            if (maxPageIndex > i)
+                            { //don't run if i=4 cuz maxPageIndex=3
+                                <b>
+                            
+                                    <a href="#" onclick="pageNumbering(@selectPage, '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">@i</a>
+                                </b>
+                                }
+                        }
+                    }
+
+                    if (maxPageIndex > pageIndexEnd)
+                    {  //search j to debug this //check 10 pages
+                        //12345 then go to start from 50
+                        <b>
+                            <a href="#" onclick="pageNumbering(@pageIndexEnd * 10, '@ViewBag.currentSortOrder', '@ViewBag.currentSearchString', '@ViewBag.currentCourseNum')">-></a>
+                </b>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleClick(a, b) {
+        var bookMarkUrl = '@Url.Action("SellIndex", "Sell")';
+        var str = "id=" + a + "&status=" + b;
+        $.ajax({
+            url: bookMarkUrl,
+            data: str,
+            success: function (result) {
+                alert(result);
+            }
+        });
+    }
+
+    function sortRedirectToIndex(a, b, c, d){
+        var sortUrl = '@Url.Action("SellIndex", "Sell")';
+        var str = "sortOrder=" + a + "&currentSortOrder=" + b + "&searchString=" + c + "&courseNum=" + d;
+        $.ajax({
+            url: sortUrl,
+            data: str,
+            dataType: "html",
+            success: function (result) {
+                $('#FullContent').html(result);
+            }
+        });
+    }
+
+    function pageNumbering(a, b, c, d) {
+        var sortUrl = '@Url.Action("SellIndex", "Sell")';
+
+
+        var str = "start=" + a + "&currentSortOrder=" + b + "&searchString=" + c + "&courseNum=" + d;
+        $.ajax({
+            url: sortUrl,
+            data: str,
+            dataType: "html",
+            success: function (result) {
+                $('#FullContent').html(result);
+            }
+        });
+    }
+</script>
+<script>
+    $('.header').nextUntil('tr.header').hide();
+    $('.header').click(function () {
+        $(this).nextUntil('tr.header').slideToggle(100);
+    });
+</script>
+
+
+
+
+
+
+

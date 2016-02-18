@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<body style="background-image:url(../Images/dontstrand.png)">
+    <div class="lockscreen">
+        <div class="container">
+            <div class="headline">
+                Textbook List
+            </div>
+
+            <div class="col-md-6">
+                <div class="lockscreen-item">
+                    <div class="lockscreen-credentials">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                @Html.TextBox("searchString", "", new { @class = "form-control", placeholder = "Search by title, author or ISBN" })
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-flat"><i class="fa fa-search" style="color: white;"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="lockscreen-item">
+                    <div class="lockscreen-credentials">
+                        <form class="navbar-form" role="search">
+                            <div class="input-group">
+                                @Html.DropDownList("GT_Course", ViewBag.courseid as SelectList, "Select a Course", new { @class = "form-control", id = "course" })
+                                <select class="form-control" id="class" name="courseNum">
+                                    <option>Select a Class</option>
+                                </select>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-flat"><i class="fa fa-search" style="color: white;"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="bs-docs-section">
+            <div class="bs-example bs-example-tabs" role="tabpanel">
+                <div class="container">
+                    <ul id="myTab" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#sell" id="sell-tab" role="tab" data-toggle="tab" aria-controls="sell" aria-expanded="true">Selling List</a></li>
+                        <li role="presentation"><a href="#buy" role="tab" id="buy-tab" data-toggle="tab" aria-controls="buy">Buying List</a></li>
+                    </ul>
+                </div>
+                <div id="myTabContent" class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="sell" aria-labelledby="sell-tab">
+                        @{Html.RenderAction("SellIndex", "Sell");}
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="buy" aria-labelledby="buy-tab">
+                        @{Html.RenderAction("BuyIndex", "Buy");}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @{
+        Html.RenderAction("Register", "Account");
+        Html.RenderAction("Login", "Account");
+        Html.RenderAction("SellPost", "Sell");
+    }
+
+    <script type="text/jscript">
+        var IndexURL = {
+            ListUrl: '@Url.Action("classList", "Books")'
+        };
+        $(function () {
+            // $('#class').hide();
+
+            $('#course').change(function () {
+                $.ajax({
+
+                    url: IndexURL.ListUrl + "/" + $('#course').val(),
+                    dataType: "json",
+                    success: function (data) {
+                        var items = "";
+                        $.each(data, function (index, Class) {
+                            items += "<option value = '" + Class.Value + "'>" + Class.Text + "</option>";
+                        });
+                        $('#class').html(items);
+                        $('#class').show();
+                    },
+                    error: function (data) {
+                        var items = "";
+                        items += "<option>Select a Class</option>";
+                        $('#class').html(items);
+                        $('#class').show();
+                    }
+                })
+            });
+        });
+    </script>
+</body>
+

@@ -1,0 +1,309 @@
+﻿@using GTBookSwap.Models;
+@using Microsoft.AspNet.Identity;
+@{
+    ViewBag.Title = "Manage Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<body style="background-image:url(../Images/Tech.jpg)">
+
+    <div class="lockscreen">
+        <div class="container">
+            <div class="headline text-center">
+                <h1>Welcome <b>@ViewBag.UserNickname!</b> This is your my page.</h1>
+            </div> 
+            <hr />
+        </div>
+    </div>
+
+    <!--Indent line starts here-->
+
+    <div class="container">
+
+        <div class="col-md-3">
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <!--Put data here-->
+                    <h3>@ViewBag.NumSellPost</h3>
+                    <p>Number of Sell Post</p>
+                </div>
+                <div class="icon">
+                    <i class="glyphicon glyphicon-list-alt" style="font-size:70px"></i>
+                </div>
+                <a href="@Url.Action("Index", "Books")" class="small-box-footer">
+                    Back to List <i class="glyphicon glyphicon-play-circle"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <!--Put data here-->
+                    <h3>@ViewBag.NumBuyPost</h3>
+                    <p>Number of Buy Post</p>
+                </div>
+                <div class="icon">
+                    <i class="glyphicon glyphicon-list-alt" style="font-size:70px"></i>
+                </div>
+                <a href="@Url.Action("Index", "Books")" class="small-box-footer">
+                    Back to List <i class="glyphicon glyphicon-play-circle"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <!--Put data here-->
+                    <h3>@ViewBag.NumSellBookmarks</h3>
+                    <p>Number of Sell Bookmarks</p>
+                </div>
+                <div class="icon">
+                    <i class="glyphicon glyphicon-bookmark" style="font-size: 70px"></i>
+                </div>
+                <a href="@Url.Action("Index", "Books")" class="small-box-footer">
+                    Back to List <i class="glyphicon glyphicon-play-circle"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <!--Put data here-->
+                    <h3>@ViewBag.NumBuyBookmarks</h3>
+                    <p>Number of Buy Bookmarks</p>
+                </div>
+                <div class="icon">
+                    <i class="glyphicon glyphicon-bookmark" style="font-size:70px"></i>
+                </div>
+                <a href="@Url.Action("Index", "Books")" class="small-box-footer">
+                    Back to List <i class="glyphicon glyphicon-play-circle"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-th-list"></i>
+                        <h3 class="box-title">My Sell Posts</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        @{Html.RenderAction("_MySellPost", "Sell");}
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-th-list"></i>
+                        <h3 class="box-title">My Buy Posts</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        @{Html.RenderAction("_MyBuyPost", "Buy");}
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-bookmark"></i>
+                        <h3 class="box-title">Sell Bookmarks</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        @{Html.RenderAction("_MySellBookmark", "Sell");}
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-bookmark"></i>
+                        <h3 class="box-title">Buy Bookmarks</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div>
+                    <div class="box-body">
+                        @{Html.RenderAction("_MySellPost", "Sell");}
+                    </div>
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div>
+            </div>
+
+            @*<div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <h3 class="box-title">Quick Email</h3>
+                            <!-- tools box -->
+                            <div class="pull-right box-tools">
+                                <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                            </div><!-- /. tools -->
+                        </div>
+                        <div class="box-body">
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="emailto" placeholder="Email to:" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="subject" placeholder="Subject" />
+                                </div>
+                                <div>
+                                    <textarea class="textarea" placeholder="Message" style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="box-footer clearfix">
+                            <button class="pull-right btn btn-default" id="sendEmail">Send <i class="fa fa-arrow-circle-right"></i></button>
+                        </div>
+                    </div>
+                </div>*@
+
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <h3 class="box-title">Change your password</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        @{Html.RenderAction("ChangePasswordPartial");}
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <h3 class="box-title">Change your Info</h3>
+                        <div class="pull-right box-tools">
+                            <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                        </div><!-- /. tools -->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        @{Html.RenderAction("ChangeUserInfo");}
+                    </div><!-- /.box-body -->
+                    <div class="box-footer clearfix no-border">
+                    </div>
+                </div><!-- /.box -->
+            </div>
+
+            @*Only admin can see these sections*@
+            @if (User.Identity.Name == ViewBag.Admin || User.Identity.Name == ViewBag.Admin1)
+            {
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                            <h3 class="box-title">All of Sell Posts</h3>
+                            <div class="pull-right box-tools">
+                                <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                            </div><!-- /. tools -->
+                        </div>
+                        <div class="box-body">
+                            @{Html.RenderAction("_AdminSellPost", "Sell");}
+                        </div>
+                        <div class="box-footer clearfix no-border">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <i class="glyphicon glyphicon-th-list"></i>
+                            <h3 class="box-title">All of Buy Posts</h3>
+                            <div class="pull-right box-tools">
+                                <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                            </div><!-- /. tools -->
+                        </div>
+                        <div class="box-body">
+                            @{Html.RenderAction("_AdminBuyPost", "Buy");}
+                        </div>
+                        <div class="box-footer clearfix no-border">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <i class="glyphicon glyphicon-user"></i>
+                            <h3 class="box-title">All Users</h3>
+                            <div class="pull-right box-tools">
+                                <button class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Hide"><i class="glyphicon glyphicon-chevron-up"></i></button>
+                            </div><!-- /. tools -->
+                        </div>
+                        <div class="box-body">
+                            @{Html.RenderAction("_AdminAllUsers");}
+                        </div>
+                        <div class="box-footer clearfix no-border">
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+    @{
+        Html.RenderAction("SellEdit", "Sell");
+        Html.RenderAction("SellDelete", "Sell");
+    }
+
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/bootstrap3-wysihtml5.all.min.js"></script>
+    <script src="~/Scripts/jquery.nav.js"></script>
+
+    <script>
+        $('.header').nextUntil('tr.header').slideUp();
+        $('.header').click(function () {
+            $(this).nextUntil('tr.header').slideToggle(100);
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            $(".textarea").wysihtml5();
+        });
+    </script>
+
+    <script>
+        $('#top-nav').onePageNav({
+            currentClass: 'current',
+            changeHash: true, scrollSpeed: 1000
+        });
+    </script>
+</body>

@@ -1,0 +1,14 @@
+﻿@model GTBookSwap.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="modal fade" id="myRegisterModal" tabindex="-1" role="dialog" aria-labelledby="registerLabel" aria-hidden="true">
+    <div class="modal-dialog" id="pop">
+        @{Html.RenderPartial("_Register");}
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

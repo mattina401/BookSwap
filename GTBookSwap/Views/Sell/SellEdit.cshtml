@@ -1,0 +1,99 @@
+﻿@model GTBookSwap.Models.EG_Textbook
+
+<div class="modal fade" id="sellEditModal" tabindex="-1" role="dialog" aria-labelledby="sellEditLabel" aria-hidden="true">
+    <div class="modal-dialog" id="pop">
+        <div class="modal-content" id="popSellEdit">
+            <div class="modal-header">
+                <h4 class="modal-title" id="sellEditLabel">Edit Your Book</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                }
+                <div class="container no-padding no-margin" id="sellEdit">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 container no-padding">
+                        <input type="submit" value="Edit" id="SellEdit" class="btn btn-default btn-lg">
+                        <!--Add back to list button-->
+                        @Html.ActionLink("Cancel", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-lg" })
+                    </div>
+                    <span id="registerData"></span>
+                    <span id="test1"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/jscript">
+    var IndexURL = {
+        ListUrl: '@Url.Action("classList", "Sell")'
+    };
+
+    function CourseChange(selectedValue, selectedText) {
+        $('#courseSearchDrop').html(selectedText + ' <span class="caret"></span>');
+        $('#selectedCourse').val(selectedValue);
+        $.ajax({
+            url: IndexURL.ListUrl + "/" + selectedValue,
+            dataType: "json",
+            success: function (data) {
+                var items = "";
+                $.each(data, function (index, Class) {
+                    items += "<li onclick=" + '"' + "ClassChange('" + Class.Value + "', '" + Class.Text + "')" + '">'
+                        + "<a href=" + '"#"' + ">" + Class.Text + "</a></li>";
+                });
+                $('#courseNumberSearchDropdown').html(items);
+            },
+            error: function (data) {
+                var items = "";
+                $('#courseNumberSearchDropdown').html(items);
+            }
+        })
+    }
+
+    function ClassChange(selectedValue, selectedText) {
+        $('#courseNumberSearchDrop').html(selectedText + ' <span class="caret"></span>');
+        $('#selectedCourseNum').val(selectedValue);
+    }
+
+    function ConditionChange(str) {
+        $('#sellEditConditionDrop').html(str + ' <span class="caret"></span>');
+        $('#sellEditCondition').val(str);
+    }
+
+    function UserInfoChange(str) {
+        $('#sellEditUserInfoDrop').html(str + ' <span class="caret"></span>');
+        $('#sellEditUserInfo').val(str);
+    }
+</script>
+<script type="text/javascript">
+    var SellEditURL = {
+        SellEditUrl: '@Url.Action("SellEdit", "Sell")'
+    };
+
+    $("#SellEdit").click(function () {
+        var content = $("#SellEditContent").serialize();
+        var form = $('#__AjaxAntiForgeryForm');
+        var token = $('input[name="__RequestVerificationToken"]', form).val();
+        var str = "__RequestVerificationToken=" + token + "&" + content;
+        $.ajax({
+            url: SellEditURL.SellEditUrl,
+            cache: 'false',
+            type: 'POST',
+            data: str,
+            dataType: "json",
+            success: function (result) {
+                alert("Edit Succeed!!");
+                window.location = result;
+                //$("#searchContainer").html(result);
+            },
+            error: function (result) {
+                alert("Fail");
+            }
+        })
+    });
+</script>

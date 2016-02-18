@@ -1,0 +1,133 @@
+﻿@model GTBookSwap.Models.Buy_User
+@{
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+}
+
+
+<div class="container">
+    @{Html.RenderAction("_BuyPost");}
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div align="center">
+            <h1>Edit your post</h1>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.Author, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Author, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Author)
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.Edition, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Edition, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Edition)
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.ISBN, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ISBN, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ISBN)
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.Desc, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-5">
+                @Html.TextAreaFor(model => model.Desc, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Desc)
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.LabelFor(model => model.Major, new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-5">
+                @Html.DropDownList("GT_Course", ViewBag.courseid as SelectList, "Select a Course", new { @class = "drop-control", id = "course" })
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <h2>@Html.Label("Course #", new { @class = "control-label col-md-2" })</h2>
+            <div class="col-md-5">
+                <select class="drop-control" id="Class" name="courseNum">
+                    <option>Select a Class</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div align="center">
+            <!--Change back to list to Cancel-->
+            <input type="submit" value="Edit" class="btn btn-default btn-lg">
+            @Html.ActionLink("Cancel", "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "btn btn-default btn-lg" })
+        </div>
+    </div>
+
+}
+
+<script type="text/jscript">
+    var IndexURL = {
+        ListUrl: '@Url.Action("classList", "Buy")'
+    };
+    $(function () {
+        // $('#class').hide();
+
+        $('#course').change(function () {
+            $.ajax({
+
+                url: IndexURL.ListUrl + "/" + $('#course').val(),
+                dataType: "json",
+                success: function (data) {
+                    var items = "";
+                    $.each(data, function (index, Class) {
+                        items += "<option value = '" + Class.Value + "'>" + Class.Text + "</option>";
+                    });
+                    $('#Class').html(items);
+                    $('#Class').show();
+                },
+                error: function (data) {
+                    var items = "";
+                    items += "<option>Select a Class</option>";
+                     $('#Class').html(items);
+                    $('#Class').show();
+                }
+            })
+        });
+    });
+</script>
